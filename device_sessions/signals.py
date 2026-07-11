@@ -4,6 +4,8 @@ from django.utils import timezone
 
 from .models import DeviceSession
 from .utils import parse_device_info
+from core.activity import log_activity
+
 
 
 @receiver(user_logged_in)
@@ -18,6 +20,7 @@ def create_device_session(sender, request, user, **kwargs):
             **info,
         },
     )
+    log_activity(request, "user_login", {"browser": info["browser"], "os": info["os"]})
 
 
 @receiver(user_logged_out)
@@ -26,3 +29,4 @@ def close_device_session(sender, request, user, **kwargs):
         DeviceSession.objects.filter(session_key=request.session.session_key).update(
             is_active=False, logout_at=timezone.now()
         )
+        log_activity(request, "user_logout", {})

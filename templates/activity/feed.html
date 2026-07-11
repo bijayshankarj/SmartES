@@ -10,8 +10,10 @@
         <div class="activity-action">{{ log.action }}</div>
         <div class="activity-details">
             {% for key, value in log.details.items %}
-                <span class="detail-chip">{{ key }}: {{ value }}</span>
+            <span class="detail-chip">{{ key }}: {{ value }}</span>
             {% endfor %}
+            <span class="detail-chip">📱 {{ log.device_type }} · {{ log.browser }} · {{ log.os }}</span>
+            <span class="detail-chip">{{ log.ip_address }}</span>
         </div>
         <div class="activity-time">{{ log.timestamp }}</div>
     </div>

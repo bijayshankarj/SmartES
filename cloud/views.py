@@ -119,7 +119,7 @@ def create_folder(request):
     parent_id = request.POST.get("parent_id") or None
     if name:
         folder = Folder.objects.create(owner=request.user, name=name, parent_id=parent_id)
-        log_activity(request.user, "folder_created", {"folder_id": folder.id, "name": folder.name})
+        log_activity(request, "folder_created", {"folder_id": folder.id, "name": folder.name})
     if parent_id:
         return redirect("cloud:browse_folder", folder_id=parent_id)
     return redirect("cloud:browse")
@@ -140,7 +140,7 @@ def upload_file(request):
             size=uploaded.size,
             content_type=uploaded.content_type or "",
         )
-        log_activity(request.user, "file_uploaded", {
+        log_activity(request, "file_uploaded", {
             "file_id": file_item.id, "name": file_item.original_name, "size": file_item.size
         })
     if folder_id:
@@ -161,7 +161,7 @@ def download_file(request, pk):
 def delete_file(request, pk):
     file_item = get_object_or_404(FileItem, pk=pk, owner=request.user)
     folder_id = file_item.folder_id
-    log_activity(request.user, "file_deleted", {"file_id": file_item.id, "name": file_item.original_name})
+    log_activity(request, "file_deleted", {"file_id": file_item.id, "name": file_item.original_name})
     storage_backend.delete(file_item.file.name)
     file_item.delete()
     if folder_id:
@@ -174,7 +174,7 @@ def delete_file(request, pk):
 def delete_folder(request, pk):
     folder = get_object_or_404(Folder, pk=pk, owner=request.user)
     parent_id = folder.parent_id
-    log_activity(request.user, "folder_deleted", {"folder_id": folder.id, "name": folder.name})
+    log_activity(request, "folder_deleted", {"folder_id": folder.id, "name": folder.name})
     folder.delete()
     if parent_id:
         return redirect("cloud:browse_folder", folder_id=parent_id)
