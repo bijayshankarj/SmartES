@@ -47,6 +47,7 @@ urlpatterns = [
         include('api.urls')
     ),
 
+    path("notes/", include("notes.urls")),
 
 
 

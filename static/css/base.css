@@ -88,3 +88,16 @@ body {
 .module-card .card-icon { font-size: 26px; margin-bottom: 10px; }
 .module-card .card-title { font-weight: 600; margin-bottom: 4px; }
 .module-card .card-desc { font-size: 13px; color: #9aa0a6; }
+
+
+.note-form { display: flex; flex-direction: column; gap: 10px; max-width: 480px; margin-bottom: 28px; }
+.note-form input, .note-form textarea {
+    background: #1a1c22; border: 1px solid #2a2d36; border-radius: 6px;
+    color: #e6e6e6; padding: 10px; font-family: inherit;
+}
+.note-form button, .note-actions button {
+    background: #2563eb; color: #fff; border: none; border-radius: 6px;
+    padding: 8px 14px; cursor: pointer; font-size: 13px;
+}
+.note-actions { display: flex; gap: 8px; margin-top: 12px; }
+.note-actions .delete-btn { background: #ef4444; }

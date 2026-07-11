@@ -28,11 +28,11 @@
         <div class="card-title">Personal Cloud</div>
         <div class="card-desc">Files, folders, sharing</div>
     </a>
-    <a href="#" class="module-card disabled">
-        <div class="card-icon">📝</div>
-        <div class="card-title">Notes</div>
-        <div class="card-desc">Rich text & quick notes</div>
-    </a>
+    <a href="{% url 'notes:list' %}" class="module-card">
+      <div class="card-icon">📝</div>
+      <div class="card-title">Notes</div>
+      <div class="card-desc">Rich text & quick notes</div>
+  </a>
     <a href="#" class="module-card disabled">
         <div class="card-icon">📋</div>
         <div class="card-title">Clipboard Hub</div>

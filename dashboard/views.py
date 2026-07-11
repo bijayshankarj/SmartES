@@ -7,6 +7,7 @@
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
+from notes.models import Note
 
 
 @login_required
@@ -15,8 +16,9 @@ def home(request):
     # Replace each with a real query once that app's models exist.
     stats = {
         "files_count": 0,
-        "notes_count": 0,
+        "notes_count": Note.objects.filter(owner=request.user).count(),
         "active_sessions": 1,
         "devices_online": 0,
     }
     return render(request, "dashboard/home.html", {"stats": stats})
+
