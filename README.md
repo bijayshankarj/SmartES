@@ -53,13 +53,14 @@ An AI assistant layer that consumes APIs (never touches the database directly) t
 
 ## Project Structure
 BijayES Ecosystem/
+
 ├── bijayes_server/       # Django project settings, root urls, asgi/wsgi
 
-├── core/                 # Shared utilities: Mongo connection layer, activity logging
+    ├── core/                 # Shared utilities: Mongo connection layer, activity logging
 
-├── dashboard/            # Dashboard home page, stats aggregation
+    ├── dashboard/            # Dashboard home page, stats aggregation
 
-├── notes/                # Notes module
+    ├── notes/                # Notes module
 ├── cloud/                # Personal Cloud: folders, files, storage abstraction
 ├── clipboard/            # Clipboard Hub module
 ├── device_sessions/      # Browser/device session tracking (NOT Layer 2 device agents)
