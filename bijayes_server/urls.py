@@ -53,8 +53,11 @@ urlpatterns = [
 
     path("cloud/", include("cloud.urls")),
 
-    
+
     path("activity/", include("activity.urls")),
+
+    path("my-devices/", include("device_sessions.urls")),
+    
 
 
 

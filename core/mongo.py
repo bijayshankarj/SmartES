@@ -7,7 +7,7 @@ _client = None
 def get_mongo_client():
     global _client
     if _client is None:
-        _client = MongoClient(settings.MONGO_HOST, settings.MONGO_PORT)
+        _client = MongoClient(settings.MONGO_HOST, settings.MONGO_PORT, tz_aware=True)
     return _client
 
 

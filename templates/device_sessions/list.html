@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}My Devices · SmartES{% endblock %}
+
+{% block content %}
+<h2 class="section-title">Logged-in Devices</h2>
+
+<div class="activity-list">
+    {% for device in devices %}
+    <div class="activity-row">
+        <div class="activity-action">
+            {% if device.is_online %}🟢{% else %}⚪{% endif %}
+            {{ device.device_type }} · {{ device.browser }}
+        </div>
+        <div class="activity-details">
+            <span class="detail-chip">{{ device.os }}</span>
+            <span class="detail-chip">{{ device.ip_address }}</span>
+            <span class="detail-chip">Logged in: {{ device.login_at }}</span>
+            <span class="detail-chip">Last seen: {{ device.last_seen_at }}</span>
+        </div>
+        {% if device.is_online %}
+        <form action="{% url 'device_sessions:terminate' device.pk %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="delete-btn">Log out this device</button>
+        </form>
+        {% endif %}
+    </div>
+    {% empty %}
+    <p>No device sessions recorded yet.</p>
+    {% endfor %}
+</div>
+{% endblock %}

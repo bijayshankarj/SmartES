@@ -21,6 +21,7 @@
                 <a href="#" class="nav-link disabled">Projects</a>
                 <a href="#" class="nav-link disabled">Downloads</a>
                 <a href="{% url 'activity:feed' %}" class="nav-link ">Activity</a>
+                <a href="{% url 'device_sessions:list' %}" class="nav-link">Devices</a>
                 <a href="#" class="nav-link disabled">Settings</a>
             </nav>
             <form action="{% url 'logout' %}" method="post" class="logout-form">
