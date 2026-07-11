@@ -15,12 +15,22 @@
         <button type="submit">Create folder</button>
     </form>
 
-    <form action="{% url 'cloud:upload' %}" method="post" enctype="multipart/form-data" class="inline-form">
-        {% csrf_token %}
-        <input type="hidden" name="folder_id" value="{{ current_folder.id|default:'' }}">
-        <input type="file" name="file" required>
+    <form id="upload-form" class="inline-form">
+        <input type="hidden" id="folder-id" value="{{ current_folder.id|default:'' }}">
+        <input type="file" id="file-input" required>
         <button type="submit">Upload</button>
     </form>
+</div>
+
+<div id="transfer-progress" class="transfer-box" style="display:none;">
+    <div class="transfer-label" id="transfer-label">Uploading...</div>
+    <div class="progress-track">
+        <div class="progress-fill" id="progress-fill"></div>
+    </div>
+    <div class="transfer-footer">
+        <div class="transfer-stats" id="transfer-stats"></div>
+        <button type="button" id="cancel-transfer-btn" class="cancel-btn">Cancel</button>
+    </div>
 </div>
 
 <div class="card-grid">
@@ -47,7 +57,11 @@
         <div class="card-title">{{ file.original_name }}</div>
         <div class="card-desc">{{ file.size|filesizeformat }}</div>
         <div class="note-actions">
-            <a href="{% url 'cloud:download' file.id %}"><button type="button">Download</button></a>
+            <button type="button" class="download-btn"
+                    data-url="{% url 'cloud:download' file.id %}"
+                    data-filename="{{ file.original_name }}">
+                Download
+            </button>
             <form action="{% url 'cloud:delete_file' file.id %}" method="post">
                 {% csrf_token %}
                 <button type="submit" class="delete-btn">Delete</button>
@@ -60,4 +74,134 @@
     <p>This folder is empty — create a subfolder or upload a file.</p>
     {% endif %}
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function getCookie(name) {
+    const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    return match ? match[2] : null;
+}
+
+function formatSpeed(bytesPerSec) {
+    if (bytesPerSec > 1024 * 1024) return (bytesPerSec / (1024 * 1024)).toFixed(1) + " MB/s";
+    return (bytesPerSec / 1024).toFixed(1) + " KB/s";
+}
+
+function formatEta(seconds) {
+    if (!isFinite(seconds) || seconds < 0) return "calculating...";
+    if (seconds < 60) return Math.ceil(seconds) + "s remaining";
+    return Math.ceil(seconds / 60) + "m " + Math.ceil(seconds % 60) + "s remaining";
+}
+
+let activeXhr = null;
+
+function showProgress(label) {
+    document.getElementById("transfer-progress").style.display = "block";
+    document.getElementById("transfer-label").textContent = label;
+    document.getElementById("progress-fill").style.width = "0%";
+    document.getElementById("transfer-stats").textContent = "";
+}
+
+function hideProgress() {
+    document.getElementById("transfer-progress").style.display = "none";
+    activeXhr = null;
+}
+
+function trackProgress(event, startTime) {
+    if (!event.lengthComputable) return;
+    const elapsed = (Date.now() - startTime) / 1000;
+    const speed = event.loaded / elapsed;
+    const percent = Math.round((event.loaded / event.total) * 100);
+    const remaining = (event.total - event.loaded) / speed;
+
+    document.getElementById("progress-fill").style.width = percent + "%";
+    document.getElementById("transfer-stats").textContent =
+        percent + "% · " + formatSpeed(speed) + " · " + formatEta(remaining);
+}
+
+document.getElementById("cancel-transfer-btn").addEventListener("click", function () {
+    if (activeXhr) {
+        activeXhr.abort();
+    }
+    hideProgress();
+});
+
+// Upload
+document.getElementById("upload-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const fileInput = document.getElementById("file-input");
+    if (!fileInput.files.length) return;
+
+    const formData = new FormData();
+    formData.append("file", fileInput.files[0]);
+    formData.append("folder_id", document.getElementById("folder-id").value);
+
+    const startTime = Date.now();
+    showProgress("Uploading " + fileInput.files[0].name);
+
+    const xhr = new XMLHttpRequest();
+    activeXhr = xhr;
+    xhr.open("POST", "{% url 'cloud:upload' %}");
+    xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
+
+    xhr.upload.addEventListener("progress", function (event) {
+        trackProgress(event, startTime);
+    });
+
+    xhr.onload = function () {
+        hideProgress();
+        window.location.reload();
+    };
+    xhr.onerror = function () {
+        hideProgress();
+        alert("Upload failed.");
+    };
+    xhr.onabort = function () {
+        console.log("Upload cancelled by user.");
+    };
+
+    xhr.send(formData);
+});
+
+// Download
+document.querySelectorAll(".download-btn").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+        const url = btn.getAttribute("data-url");
+        const filename = btn.getAttribute("data-filename");
+        const startTime = Date.now();
+        showProgress("Downloading " + filename);
+
+        const xhr = new XMLHttpRequest();
+        activeXhr = xhr;
+        xhr.open("GET", url);
+        xhr.responseType = "blob";
+
+        xhr.addEventListener("progress", function (event) {
+            trackProgress(event, startTime);
+        });
+
+        xhr.onload = function () {
+            hideProgress();
+            const blobUrl = window.URL.createObjectURL(xhr.response);
+            const a = document.createElement("a");
+            a.href = blobUrl;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            window.URL.revokeObjectURL(blobUrl);
+        };
+        xhr.onerror = function () {
+            hideProgress();
+            alert("Download failed.");
+        };
+        xhr.onabort = function () {
+            console.log("Download cancelled by user.");
+        };
+
+        xhr.send();
+    });
+});
+</script>
 {% endblock %}

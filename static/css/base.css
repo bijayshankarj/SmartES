@@ -194,3 +194,26 @@ body {
 }
 .clip-card .delete-btn { background: #ef4444; }
 .clip-card .copy-btn { background: #16a34a; flex-shrink: 0; }
+
+
+
+/* Progress Bar */
+.transfer-box {
+    background: #171a21;
+    border: 1px solid #22252d;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 24px;
+    max-width: 480px;
+}
+.transfer-label { font-size: 13px; margin-bottom: 8px; color: #cfd3d8; }
+.progress-track {
+    width: 100%; height: 8px;
+    background: #1e212a; border-radius: 4px; overflow: hidden;
+}
+.progress-fill {
+    height: 100%; width: 0%;
+    background: #2563eb;
+    transition: width 0.2s ease;
+}
+.transfer-stats { font-size: 12px; color: #9aa0a6; margin-top: 6px; }
