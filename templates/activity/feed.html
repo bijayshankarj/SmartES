@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Activity Feed · SmartES{% endblock %}
+
+{% block content %}
+<h2 class="section-title">Activity Feed</h2>
+
+<div class="activity-list">
+    {% for log in logs %}
+    <div class="activity-row">
+        <div class="activity-action">{{ log.action }}</div>
+        <div class="activity-details">
+            {% for key, value in log.details.items %}
+                <span class="detail-chip">{{ key }}: {{ value }}</span>
+            {% endfor %}
+        </div>
+        <div class="activity-time">{{ log.timestamp }}</div>
+    </div>
+    {% empty %}
+    <p>No activity yet.</p>
+    {% endfor %}
+</div>
+{% endblock %}

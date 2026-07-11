@@ -90,6 +90,9 @@ body {
 .module-card .card-desc { font-size: 13px; color: #9aa0a6; }
 
 
+
+
+/* Note Form --------------------------------------------------------------------------------------- */
 .note-form { display: flex; flex-direction: column; gap: 10px; max-width: 480px; margin-bottom: 28px; }
 .note-form input, .note-form textarea {
     background: #1a1c22; border: 1px solid #2a2d36; border-radius: 6px;
@@ -103,6 +106,8 @@ body {
 .note-actions .delete-btn { background: #ef4444; }
 
 
+
+/* Cloud Actions --------------------------------------------------------------------------------------- */
 .cloud-actions { display: flex; gap: 24px; margin-bottom: 28px; flex-wrap: wrap; }
 .inline-form { display: flex; gap: 8px; align-items: center; }
 .inline-form input[type="text"] {
@@ -115,3 +120,17 @@ body {
 }
 .folder-link { text-decoration: none; color: inherit; display: block; }
 .file-preview { width: 100%; height: 100px; object-fit: cover; border-radius: 6px; margin-bottom: 8px; }
+
+
+
+/* Activity Feed ---------------------------------------------------------------------------------------*/
+.activity-list { display: flex; flex-direction: column; gap: 6px; }
+.activity-row {
+    display: flex; align-items: center; gap: 16px;
+    background: #171a21; border: 1px solid #22252d; border-radius: 8px;
+    padding: 12px 16px; font-size: 13px;
+}
+.activity-action { font-weight: 600; min-width: 140px; text-transform: capitalize; }
+.activity-details { flex: 1; display: flex; gap: 8px; flex-wrap: wrap; }
+.detail-chip { background: #1e212a; padding: 3px 8px; border-radius: 4px; color: #9aa0a6; }
+.activity-time { color: #6b7079; font-size: 12px; white-space: nowrap; }

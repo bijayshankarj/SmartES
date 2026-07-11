@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'notes',
     'cloud',
+    'activity',
 ]
 
 MIDDLEWARE = [

@@ -53,6 +53,9 @@ urlpatterns = [
 
     path("cloud/", include("cloud.urls")),
 
+    
+    path("activity/", include("activity.urls")),
+
 
 
 ]
