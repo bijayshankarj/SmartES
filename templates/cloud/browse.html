@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Personal Cloud · SmartES{% endblock %}
+
+{% block content %}
+<h2 class="section-title">
+    Personal Cloud
+    {% if current_folder %} / {{ current_folder.name }}{% endif %}
+</h2>
+
+<div class="cloud-actions">
+    <form action="{% url 'cloud:create_folder' %}" method="post" class="inline-form">
+        {% csrf_token %}
+        <input type="hidden" name="parent_id" value="{{ current_folder.id|default:'' }}">
+        <input type="text" name="name" placeholder="New folder name" required>
+        <button type="submit">Create folder</button>
+    </form>
+
+    <form action="{% url 'cloud:upload' %}" method="post" enctype="multipart/form-data" class="inline-form">
+        {% csrf_token %}
+        <input type="hidden" name="folder_id" value="{{ current_folder.id|default:'' }}">
+        <input type="file" name="file" required>
+        <button type="submit">Upload</button>
+    </form>
+</div>
+
+<div class="card-grid">
+    {% for folder in folders %}
+    <div class="module-card folder-card">
+        <a href="{% url 'cloud:browse_folder' folder.id %}" class="folder-link">
+            <div class="card-icon">📁</div>
+            <div class="card-title">{{ folder.name }}</div>
+        </a>
+        <form action="{% url 'cloud:delete_folder' folder.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="delete-btn">Delete</button>
+        </form>
+    </div>
+    {% endfor %}
+
+    {% for file in files %}
+    <div class="module-card file-card">
+        {% if file.is_image %}
+            <img src="{{ file.file.url }}" class="file-preview" alt="{{ file.original_name }}">
+        {% else %}
+            <div class="card-icon">📄</div>
+        {% endif %}
+        <div class="card-title">{{ file.original_name }}</div>
+        <div class="card-desc">{{ file.size|filesizeformat }}</div>
+        <div class="note-actions">
+            <a href="{% url 'cloud:download' file.id %}"><button type="button">Download</button></a>
+            <form action="{% url 'cloud:delete_file' file.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="delete-btn">Delete</button>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+
+    {% if not folders and not files %}
+    <p>This folder is empty — create a subfolder or upload a file.</p>
+    {% endif %}
+</div>
+{% endblock %}

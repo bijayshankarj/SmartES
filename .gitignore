@@ -36,3 +36,4 @@ Thumbs.db
 
 # Static files collected in production
 staticfiles/
+media/
