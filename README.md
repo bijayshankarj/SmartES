@@ -79,7 +79,7 @@ BijayES Ecosystem/
     ├── static/               # CSS, JS, images
 
     ├── media/                # User-uploaded files (gitignored)
-    
+
     └── manage.py
 
 
@@ -92,7 +92,7 @@ BijayES Ecosystem/
 
 1. Clone the repo and create a virtual environment:
 ```bash
-   git clone <your-repo-url>
+   git clone https://github.com/bijayshankarj/SmartES
    cd "BijayES Ecosystem"
    python -m venv virt
    virt\Scripts\activate
