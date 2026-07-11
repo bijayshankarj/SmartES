@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Dashboard · SmartES{% endblock %}
+
+{% block content %}
+<div class="stats-row">
+    <div class="stat-card">
+        <div class="stat-value">{{ stats.files_count }}</div>
+        <div class="stat-label">Files stored</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">{{ stats.notes_count }}</div>
+        <div class="stat-label">Notes</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">{{ stats.active_sessions }}</div>
+        <div class="stat-label">Active sessions</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">{{ stats.devices_online }}</div>
+        <div class="stat-label">Devices online</div>
+    </div>
+</div>
+
+<h2 class="section-title">Modules</h2>
+<div class="card-grid">
+    <a href="#" class="module-card disabled">
+        <div class="card-icon">☁️</div>
+        <div class="card-title">Personal Cloud</div>
+        <div class="card-desc">Files, folders, sharing</div>
+    </a>
+    <a href="#" class="module-card disabled">
+        <div class="card-icon">📝</div>
+        <div class="card-title">Notes</div>
+        <div class="card-desc">Rich text & quick notes</div>
+    </a>
+    <a href="#" class="module-card disabled">
+        <div class="card-icon">📋</div>
+        <div class="card-title">Clipboard Hub</div>
+        <div class="card-desc">Cross-browser clipboard</div>
+    </a>
+    <a href="#" class="module-card disabled">
+        <div class="card-icon">💬</div>
+        <div class="card-title">Messaging</div>
+        <div class="card-desc">Browser-to-browser chat</div>
+    </a>
+    <a href="#" class="module-card disabled">
+        <div class="card-icon">📁</div>
+        <div class="card-title">Projects</div>
+        <div class="card-desc">Tasks & attachments</div>
+    </a>
+    <a href="#" class="module-card disabled">
+        <div class="card-icon">⬇️</div>
+        <div class="card-title">Downloads</div>
+        <div class="card-desc">Queue & history</div>
+    </a>
+    <a href="#" class="module-card disabled">
+        <div class="card-icon">📊</div>
+        <div class="card-title">Activity Feed</div>
+        <div class="card-desc">Logins, files, system events</div>
+    </a>
+    <a href="#" class="module-card disabled">
+        <div class="card-icon">⚙️</div>
+        <div class="card-title">Settings</div>
+        <div class="card-desc">Account & security</div>
+    </a>
+</div>
+{% endblock %}

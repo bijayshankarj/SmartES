@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}SmartES{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="brand">SmartES</div>
+            <nav class="nav-links">
+                <a href="{% url 'dashboard:home' %}" class="nav-link active">Dashboard</a>
+                <a href="#" class="nav-link disabled">Personal Cloud</a>
+                <a href="#" class="nav-link disabled">Notes</a>
+                <a href="#" class="nav-link disabled">Clipboard Hub</a>
+                <a href="#" class="nav-link disabled">Messaging</a>
+                <a href="#" class="nav-link disabled">Projects</a>
+                <a href="#" class="nav-link disabled">Downloads</a>
+                <a href="#" class="nav-link disabled">Activity</a>
+                <a href="#" class="nav-link disabled">Settings</a>
+            </nav>
+            <form action="{% url 'logout' %}" method="post" class="logout-form">
+                {% csrf_token %}
+                <button type="submit" class="logout-btn">Log out</button>
+            </form>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div class="search-box">
+                    <input type="text" placeholder="Search across SmartES..." disabled>
+                </div>
+                <div class="user-chip">{{ request.user.username }}</div>
+            </header>
+
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
