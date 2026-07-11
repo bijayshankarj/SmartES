@@ -55,22 +55,19 @@ An AI assistant layer that consumes APIs (never touches the database directly) t
 BijayES Ecosystem/
 
 ├── bijayes_server/       # Django project settings, root urls, asgi/wsgi
-
     ├── core/                 # Shared utilities: Mongo connection layer, activity logging
-
     ├── dashboard/            # Dashboard home page, stats aggregation
-
     ├── notes/                # Notes module
-├── cloud/                # Personal Cloud: folders, files, storage abstraction
-├── clipboard/            # Clipboard Hub module
-├── device_sessions/      # Browser/device session tracking (NOT Layer 2 device agents)
-├── devices/              # Reserved for Layer 2 native device agents (not yet built)
-├── activity/             # Activity Feed (reads from MongoDB)
-├── api/                  # Shared/future API endpoints
-├── templates/            # All HTML templates, organized by app
-├── static/               # CSS, JS, images
-├── media/                # User-uploaded files (gitignored)
-└── manage.py
+    ├── cloud/                # Personal Cloud: folders, files, storage abstraction
+    ├── clipboard/            # Clipboard Hub module
+    ├── device_sessions/      # Browser/device session tracking (NOT Layer 2 device agents)
+    ├── devices/              # Reserved for Layer 2 native device agents (not yet built)
+    ├── activity/             # Activity Feed (reads from MongoDB)
+    ├── api/                  # Shared/future API endpoints
+    ├── templates/            # All HTML templates, organized by app
+    ├── static/               # CSS, JS, images
+    ├── media/                # User-uploaded files (gitignored)
+    └── manage.py
 
 
 
