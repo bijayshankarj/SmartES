@@ -57,6 +57,8 @@ urlpatterns = [
     path("activity/", include("activity.urls")),
 
     path("my-devices/", include("device_sessions.urls")),
+
+    path("clipboard/", include("clipboard.urls")),
     
 
 

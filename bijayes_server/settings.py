@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'cloud',
     'activity',
     'device_sessions',
+    'clipboard',
 ]
 
 MIDDLEWARE = [

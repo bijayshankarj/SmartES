@@ -102,8 +102,27 @@ body {
     background: #2563eb; color: #fff; border: none; border-radius: 6px;
     padding: 8px 14px; cursor: pointer; font-size: 13px;
 }
-.note-actions { display: flex; gap: 8px; margin-top: 12px; }
+.note-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+}
+.note-actions form { margin: 0; }
+.note-actions button {
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 12px;
+    white-space: nowrap;
+    flex: 1 1 auto;
+    min-width: 0;
+}
 .note-actions .delete-btn { background: #ef4444; }
+.copy-btn { background: #16a34a !important; }
 
 
 
@@ -134,3 +153,44 @@ body {
 .activity-details { flex: 1; display: flex; gap: 8px; flex-wrap: wrap; }
 .detail-chip { background: #1e212a; padding: 3px 8px; border-radius: 4px; color: #9aa0a6; }
 .activity-time { color: #6b7079; font-size: 12px; white-space: nowrap; }
+
+
+
+
+/* Clipboard Hub --------------------------------------------------------------------------------------- */
+.clip-card {
+    display: flex;
+    flex-direction: column;
+    min-height: 220px;
+}
+
+.clip-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+.clip-header .card-title { margin-bottom: 0; }
+
+.clip-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 12px;
+}
+.clip-footer form { margin: 0; }
+
+.clip-card button {
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 12px;
+    white-space: nowrap;
+}
+.clip-card .delete-btn { background: #ef4444; }
+.clip-card .copy-btn { background: #16a34a; flex-shrink: 0; }

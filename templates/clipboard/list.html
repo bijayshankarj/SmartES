@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Clipboard Hub · SmartES{% endblock %}
+
+{% block content %}
+<h2 class="section-title">Clipboard Hub</h2>
+
+<form action="{% url 'clipboard:create' %}" method="post" class="note-form">
+    {% csrf_token %}
+    <textarea name="content" placeholder="Paste or type something to share across devices..." rows="3" required></textarea>
+    <button type="submit">Add to clipboard</button>
+</form>
+
+<div class="card-grid">
+    {% for clip in clips %}
+    <div class="module-card clip-card">
+        <div class="clip-header">
+            <div class="card-title">
+                {% if clip.is_snippet %}⭐ {% endif %}Clip #{{ clip.id }}
+            </div>
+            <button type="button" class="copy-btn" data-full-text="{{ clip.content }}">Copy</button>
+        </div>
+
+        <div class="card-desc">{{ clip.content|truncatewords:25 }}</div>
+
+        <div class="clip-footer">
+            <form action="{% url 'clipboard:toggle_snippet' clip.pk %}" method="post">
+                {% csrf_token %}
+                <button type="submit">{% if clip.is_snippet %}Unsave{% else %}Save as snippet{% endif %}</button>
+            </form>
+            <form action="{% url 'clipboard:delete' clip.pk %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="delete-btn">Delete</button>
+            </form>
+        </div>
+    </div>
+    {% empty %}
+    <p>No clipboard entries yet — add one above.</p>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.querySelectorAll(".copy-btn").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+        const text = btn.getAttribute("data-full-text");
+        navigator.clipboard.writeText(text).then(function () {
+            const original = btn.textContent;
+            btn.textContent = "Copied!";
+            setTimeout(function () { btn.textContent = original; }, 1500);
+        }).catch(function () {
+            alert("Copy failed — your browser may be blocking clipboard access on this page.");
+        });
+    });
+});
+</script>
+{% endblock %}
