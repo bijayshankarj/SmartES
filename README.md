@@ -129,8 +129,10 @@ BijayES Ecosystem/
    python manage.py runserver 0.0.0.0:8000
 ```
 
-6. Connect other devices(Mobiles) enter <host_ip>:<port(generally 8000)>.
+6. Connect other devices(Mobiles) enter <host_ip>:<port>.
+```
     E.g., Host Ip is 192.168.0.1, port is 8000 then enter 192.168.0.1:8000
+```
 
 7. Visit `http://localhost:8000`, log in, and explore.
 
